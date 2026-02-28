@@ -6,7 +6,6 @@
     - 日が進むにつれて,過去は辿れないから範囲が狭まっているのか
      -> TimeLimit Exceeded
 
-
 ## 🤖 AI分析 & フィードバック
 
 **💡 ヒント**
@@ -22,27 +21,28 @@
 - `min_buy_price = 0` だと、どの価格も0より高いので一度も更新されない。
 - `prices[0]` か `float("inf")` にする。
 
-## ✅ 修正後のコード（最適解）
-```python
-class Solution:
-    def maxProfit(self, prices: list[int]) -> int:
-        min_buy_price = prices[0]
-        max_profit = 0
+## ✅ Solution 1: Brute Force（総当たり）
 
-        for i in range(len(prices)):
-            current_stock_price = prices[i]
-            if current_stock_price < min_buy_price:
-                min_buy_price = current_stock_price
+- **Time Complexity**: $O(N^2)$
+- **Space Complexity**: $O(1)$
+- すべての買い・売りの組み合わせを試して最大利益を求める
+- 素直だが、`N` が大きいと TLE になる
 
-            current_profit = current_stock_price - min_buy_price
-            if current_profit > max_profit:
-                max_profit = current_profit
-
-        return max_profit
-```
+## ✅ Solution 2: One Pass（一回走査）
 
 - **Time Complexity**: $O(N)$
 - **Space Complexity**: $O(1)$
+- 走査しながら「今まで見た中での最安値」を変数で記録し続ける
+- 各日について `prices[i] - min_buy_price` が「その日に売った場合の最大利益」
+
+## ✅ Solution 3: Sliding Window（スライディングウィンドウ）
+
+- **Time Complexity**: $O(N)$
+- **Space Complexity**: $O(1)$
+- One Passと本質的には同じだが、「区間の左端（買い）と右端（売り）」というフレームワークで捉えている
+- `right` を伸ばして新しい候補を調べ、`left` を動かしてより良い起点に切り替える
+
+---
 
 ## 🧠 この解法に辿り着くための思考回路
 
