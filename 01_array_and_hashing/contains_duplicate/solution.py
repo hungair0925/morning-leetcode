@@ -1,5 +1,5 @@
 class Solution:
-    def hasDuplicate(self, nums: list[int]) -> bool:
+    def containsDuplicate(self, nums: list[int]) -> bool:
         hash_map: dict[int, int] = {}
 
         for i, num in enumerate(nums):
